@@ -1,10 +1,8 @@
-﻿
-var sum1 = Enumerable.Sum(
+﻿Console.WriteLine($"2023-12-01 Part 1: {Enumerable.Sum(
     from line in await File.ReadAllLinesAsync("input.txt")
     let lineMatch = Regex.Match(line, @"^(?=\D*(?<first>\d)).*(?<last>\d)\D*$")
     select Int32.Parse($"{lineMatch.Groups["first"].Value}{lineMatch.Groups["last"].Value}")
-);
-Console.WriteLine($"2023-12-01 Part 1: {sum1}");
+)}");
 
 Int32 Parse(String value) => value switch {
     "0" or "zero" => 0,
@@ -18,11 +16,9 @@ Int32 Parse(String value) => value switch {
     "8" or "eight" => 8,
     "9" or "nine" => 9,
 };
-var sum2 = Enumerable.Sum(
+Console.WriteLine($"2023-12-01 Part 2: {Enumerable.Sum(
     from line in await File.ReadAllLinesAsync("input.txt")
     let numbers = "one|two|three|four|five|six|seven|eight|nine|zero"
-    let firstMatch = Regex.Match(line, $@"^.*?(?<first>\d|{numbers})")
-    let secondMatch = Regex.Match(line, $@"^.*(?<second>\d|{numbers})")
-    select 10 * Parse(firstMatch.Groups["first"].Value) + Parse(secondMatch.Groups["second"].Value)
-);
-Console.WriteLine($"2023-12-01 Part 2: {sum2}");
+    let lineMatch = Regex.Match(line, $@"^(?=.*?(?<first>\d|{numbers})).*(?<last>\d|{numbers})")
+    select 10 * Parse(lineMatch.Groups["first"].Value) + Parse(lineMatch.Groups["last"].Value)
+)}");
